@@ -79,8 +79,9 @@ public class Ride {
     public double calculateValue(Car car) {
 
 
-        if(getThere(car))
-        int scor = distance - computeDistance(car.x, car.y, xStart, yStart);
+        if(getThere(car)) {
+            int scor = distance - computeDistance(car.x, car.y, xStart, yStart);
+        }
 
         return 0;
     }

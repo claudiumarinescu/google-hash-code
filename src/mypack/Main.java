@@ -25,9 +25,22 @@ public class Main {
         for (Car car :cars) {
             while(car.hasTime(rides)) {
                 Ride ride = null;
+                Ride bestRide = null;
+                double bestScore = -Double.MAX_VALUE;
                 for (Iterator<Ride> it = rides.iterator(); it.hasNext(); ride = it.next()) {
-                    ride.calculateValue(car);
+
+                    if(getThere(car)) {
+                        double score = ride.calculateValue(car);
+
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestRide = ride;
+                        }
+                    }
                 }
+
+                car.addRide(bestRide);
+
             }
         }
 
@@ -55,6 +68,7 @@ public class Main {
             int earliestStart = scanner.nextInt();
             int latestFinish = scanner.nextInt();
 
+            if(latestFinish - earliestStart + 1 < )
             rides.add(new Ride(earliestStart, latestFinish, startX, startY, finishX, finishY));
         }
 
