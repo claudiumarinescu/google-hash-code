@@ -57,7 +57,7 @@ public class Car {
     }
 
     @Override
-    public String gtoString() {
+    public String toString() {
         return "Car{" +
                 "x=" + x +
                 ", y=" + y +
