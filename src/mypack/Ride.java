@@ -9,18 +9,18 @@ public class Ride {
     public Ride() {}
 
 
-    public Ride(int tStart, int tFinish, int xStart, int yStart, int xFinish, int yFinish, int distance) {
+    public Ride(int tStart, int tFinish, int xStart, int yStart, int xFinish, int yFinish) {
         this.tStart = tStart;
         this.tFinish = tFinish;
         this.xStart = xStart;
         this.yStart = yStart;
         this.xFinish = xFinish;
         this.yFinish = yFinish;
-        this.distance = distance;
+        this.distance = computeDistance();
     }
 
-    public void computeDistance() {
-        this.distance = Math.abs(xStart - xFinish) + Math.abs(yStart - yFinish);
+    public int computeDistance() {
+        return Math.abs(xStart - xFinish) + Math.abs(yStart - yFinish);
     }
 
     public int gettStart() {
