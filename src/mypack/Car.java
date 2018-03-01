@@ -51,7 +51,7 @@ public class Car {
     }
 
     public void addRide(Ride ride) {
-        time = Math.abs(x - ride.xFinish) + Math.abs(y - ride.yFinish);
+        time = Math.abs(x - ride.xStart) + Math.abs(y - ride.yStart) + ride.distance;
         x = ride.xFinish;
         y = ride.yFinish;
         rides.add(ride);
