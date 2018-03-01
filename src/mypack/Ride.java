@@ -22,7 +22,7 @@ public class Ride {
     }
 
     public int computeDistance() {
-        return Math.abs(xStart - xFinish) + Math.abs(yStart - yFinish);
+        return Util.computeDistance(xStart, xFinish, yStart, yFinish);
     }
 
     public int computeDistance(int xa, int ya, int xb, int yb) {
@@ -89,6 +89,7 @@ public class Ride {
     }
 
     public boolean getThere(Car car) {
-        return (car.time + distance) < Util.MAX_NO_STEPS;
+        int distanceToStart = Math.abs(car.x - xStart) + Math.abs(car.y - yStart);
+        return (car.time + distanceToStart + this.distance) < Util.MAX_NO_STEPS;
     }
 }

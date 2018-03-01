@@ -76,8 +76,8 @@ public class Main {
             int earliestStart = scanner.nextInt();
             int latestFinish = scanner.nextInt();
 
-            if(latestFinish - earliestStart + 1 < )
-            rides.add(new Ride(earliestStart, latestFinish, startX, startY, finishX, finishY));
+            if(latestFinish - earliestStart + 1 < Util.computeDistance(startX, startY, finishX, finishY));
+                rides.add(new Ride(earliestStart, latestFinish, startX, startY, finishX, finishY));
         }
 
         List<Car> cars = new ArrayList(Util.CARS_NO);
