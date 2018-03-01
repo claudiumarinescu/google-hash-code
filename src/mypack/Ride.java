@@ -89,7 +89,7 @@ public class Ride {
 
             if(car.time + computeDistance(car.x, car.y, xStart, yStart) <= tStart) {
                 scor -= (tStart - car.time - computeDistance(car.x, car.y, xStart, yStart));
-                scor += Util.BONUS;
+                scor += Util.BONUS *10;
             }
         }
 
@@ -98,7 +98,7 @@ public class Ride {
 
     public boolean getThere(Car car) {
         int distanceToStart = Math.abs(car.x - xStart) + Math.abs(car.y - yStart);
-        return (car.time + distanceToStart + this.distance) < Util.MAX_NO_STEPS;
+        return (car.time + distanceToStart + this.distance) < Util.MAX_NO_STEPS && car.time + distanceToStart + this.distance < tFinish;
     }
 
     @Override

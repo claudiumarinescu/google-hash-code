@@ -4,7 +4,10 @@ package mypack;
 import utils.MyScanner;
 import utils.Util;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
@@ -34,8 +37,8 @@ public class Main {
         queue.addAll(rides);
 
 
-        for (Car car :cars) {
-            if(queue.isEmpty())
+        for (Car car : cars) {
+            if (queue.isEmpty())
                 break;
             Ride bestRide = queue.poll();
             car.addRide(bestRide);
@@ -43,19 +46,18 @@ public class Main {
         }
 
 
-
-        for (Car car :cars) {
+        for (Car car : cars) {
             List<Ride> myRides = new ArrayList<>(rides);
 
 
-            while(car.hasTime(myRides)) {
+            while (car.hasTime(myRides)) {
                 Ride ride = null;
                 Ride bestRide = null;
                 double bestScore = -Double.MAX_VALUE;
                 for (Iterator<Ride> it = myRides.iterator(); it.hasNext(); ) {
                     ride = it.next();
 
-                    if(ride.getThere(car)) {
+                    if (ride.getThere(car)) {
                         double score = ride.calculateValue(car);
                         if (score > bestScore) {
                             bestScore = score;
@@ -74,11 +76,27 @@ public class Main {
                 }
 
             }
-            System.out.println("Time " + car.time);
         }
 
-        afisare();
+//        for (Ride ride : rides) {
+//            Car bestCar = null;
+//            double bestScore = -Double.MAX_VALUE;
+//
+//            for (Car car :cars) {
+//                double p = ride.calculateValue(car);
+//
+//                if (p > bestScore) {
+//                    bestScore = p;
+//                    bestCar = car;
+//                }
+//            }
+//
+//            if (bestCar != null)
+//                bestCar.addRide(ride);
+//        }
 
+
+        afisare();
 
 
     }
@@ -103,27 +121,67 @@ public class Main {
             int earliestStart = scanner.nextInt();
             int latestFinish = scanner.nextInt();
 
-            if(latestFinish - earliestStart + 1 < Util.computeDistance(startX, startY, finishX, finishY));
-                rides.add(new Ride(i, earliestStart, latestFinish, startX, startY, finishX, finishY));
+            if (latestFinish - earliestStart + 1 < Util.computeDistance(startX, startY, finishX, finishY)) ;
+            rides.add(new Ride(i, earliestStart, latestFinish, startX, startY, finishX, finishY));
         }
 
         cars = new ArrayList(Util.CARS_NO);
         for (int i = 0; i < Util.CARS_NO; i++) {
-            cars.add(new Car(i, 0,0));
+            cars.add(new Car(i + 1, 0, 0));
         }
     }
 
     public static void afisare() {
-        for (Car car : cars) {
-            System.out.print(car.id + " " );
 
-            for (Ride ride: car.rides) {
-                System.out.print(ride.id + " ");
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+
+        try {
+
+            fw = new FileWriter(new File("out.out"));
+            bw = new BufferedWriter(fw);
+
+            StringBuilder content = new StringBuilder();
+
+            for (Car car : cars) {
+
+                content.append(car.rides.size() + " ");
+
+                for (Ride ride : car.rides) {
+                    content.append(ride.id + " ");
+                }
+                content.append("\n");
             }
-            System.out.println();
+
+            bw.write(content.toString());
+
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            try {
+
+                if (bw != null)
+                    bw.close();
+
+                if (fw != null)
+                    fw.close();
+
+            } catch (IOException ex) {
+
+                ex.printStackTrace();
+
+            }
+
         }
 
     }
 
 
 }
+
+
+
