@@ -1,6 +1,8 @@
 package mypack;
 
 
+import utils.Util;
+
 public class Ride {
     public int tStart, tFinish;
     public int xStart, yStart, xFinish, yFinish;
@@ -78,15 +80,15 @@ public class Ride {
 
     public double calculateValue(Car car) {
 
-
+        double scor = -Double.MAX_VALUE;
         if(getThere(car)) {
-            int scor = distance - computeDistance(car.x, car.y, xStart, yStart);
+            scor = distance - computeDistance(car.x, car.y, xStart, yStart);
         }
 
-        return 0;
+        return scor;
     }
 
-    private boolean getThere(Car car) {
+    public boolean getThere(Car car) {
         return (car.time + distance) < Util.MAX_NO_STEPS;
     }
 }

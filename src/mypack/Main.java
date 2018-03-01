@@ -23,23 +23,31 @@ public class Main {
         read();
 
         for (Car car :cars) {
-            while(car.hasTime(rides)) {
+            List<Ride> myRides = new ArrayList<>(rides);
+            while(car.hasTime(myRides)) {
                 Ride ride = null;
                 Ride bestRide = null;
                 double bestScore = -Double.MAX_VALUE;
-                for (Iterator<Ride> it = rides.iterator(); it.hasNext(); ride = it.next()) {
+                for (Iterator<Ride> it = myRides.iterator(); it.hasNext(); ride = it.next()) {
 
-                    if(getThere(car)) {
+                    if(ride.getThere(car)) {
                         double score = ride.calculateValue(car);
 
                         if (score > bestScore) {
                             bestScore = score;
                             bestRide = ride;
                         }
+                    } else {
+                        myRides.remove(ride);
                     }
                 }
-
-                car.addRide(bestRide);
+                if (bestRide != null) {
+                    car.addRide(bestRide);
+                    myRides.remove(bestRide);
+                    rides.remove(bestRide);
+                } else {
+                    break;
+                }
 
             }
         }
