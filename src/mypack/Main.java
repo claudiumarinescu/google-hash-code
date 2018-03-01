@@ -5,9 +5,7 @@ import utils.MyScanner;
 import utils.Util;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
@@ -21,11 +19,35 @@ public class Main {
 
 
         read();
+        Car emptyCar = new Car(-1, 0, 0);
+
+        PriorityQueue<Ride> queue = new PriorityQueue<>(new Comparator<Ride>() {
+            @Override
+            public int compare(Ride r1, Ride r2) {
+                if (r1.calculateValue(emptyCar) < r2.calculateValue(emptyCar)) {
+                    return 1;
+                }
+                return -1;
+            }
+        });
+
+        queue.addAll(rides);
+
+
+        for (Car car :cars) {
+            if(queue.isEmpty())
+                break;
+            Ride bestRide = queue.poll();
+            car.addRide(bestRide);
+            rides.remove(bestRide);
+        }
 
 
 
         for (Car car :cars) {
             List<Ride> myRides = new ArrayList<>(rides);
+
+
             while(car.hasTime(myRides)) {
                 Ride ride = null;
                 Ride bestRide = null;
