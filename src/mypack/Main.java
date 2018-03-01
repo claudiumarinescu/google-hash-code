@@ -32,9 +32,9 @@ public class Main {
                 double bestScore = -Double.MAX_VALUE;
                 for (Iterator<Ride> it = myRides.iterator(); it.hasNext(); ) {
                     ride = it.next();
+
                     if(ride.getThere(car)) {
                         double score = ride.calculateValue(car);
-
                         if (score > bestScore) {
                             bestScore = score;
                             bestRide = ride;
@@ -92,12 +92,14 @@ public class Main {
 
     public static void afisare() {
         for (Car car : cars) {
-            System.out.println(car.id + " " );
+            System.out.print(car.id + " " );
 
             for (Ride ride: car.rides) {
-                System.out.println(ride.id + " ");
+                System.out.print(ride.id + " ");
             }
+            System.out.println();
         }
+
     }
 
 

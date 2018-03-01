@@ -84,7 +84,13 @@ public class Ride {
 
         double scor = -Double.MAX_VALUE;
         if(getThere(car)) {
+
             scor = distance - computeDistance(car.x, car.y, xStart, yStart);
+
+            if(car.time + computeDistance(car.x, car.y, xStart, yStart) <= tStart) {
+                scor -= (tStart - car.time - computeDistance(car.x, car.y, xStart, yStart));
+                scor += Util.BONUS;
+            }
         }
 
         return scor;

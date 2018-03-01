@@ -54,5 +54,6 @@ public class Car {
         time = Math.abs(x - ride.xFinish) + Math.abs(y - ride.yFinish);
         x = ride.xFinish;
         y = ride.yFinish;
+        rides.add(ride);
     }
 }
