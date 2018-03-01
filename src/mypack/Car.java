@@ -55,4 +55,15 @@ public class Car {
         x = ride.xFinish;
         y = ride.yFinish;
     }
+
+    @Override
+    public String gtoString() {
+        return "Car{" +
+                "x=" + x +
+                ", y=" + y +
+                ", time=" + time +
+                ", rides=" + rides +
+                ", id=" + id +
+                '}';
+    }
 }
