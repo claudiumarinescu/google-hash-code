@@ -4,10 +4,13 @@ package mypack;
 public class Ride {
     public int tStart, tFinish;
     public int xStart, yStart, xFinish, yFinish;
+    public int distance;
 
     public Ride() {}
 
-
+    public void computeDistance() {
+        this.distance = Math.abs(xStart - xFinish) + Math.abs(yStart - yFinish);
+    }
 
     public int gettStart() {
         return tStart;
