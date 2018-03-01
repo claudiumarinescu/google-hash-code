@@ -10,4 +10,8 @@ public class Util {
     public static int MAX_NO_STEPS;
 
 
+    public static int computeDistance(int xStart, int xFinish, int yStart, int yFinish) {
+        return Math.abs(xStart - xFinish) + Math.abs(yStart - yFinish);
+    }
+
 }

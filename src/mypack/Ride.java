@@ -1,6 +1,8 @@
 package mypack;
 
 
+import utils.Util;
+
 public class Ride {
     public int tStart, tFinish;
     public int xStart, yStart, xFinish, yFinish;
@@ -20,7 +22,7 @@ public class Ride {
     }
 
     public int computeDistance() {
-        return Math.abs(xStart - xFinish) + Math.abs(yStart - yFinish);
+        return Util.computeDistance(xStart, xFinish, yStart, yFinish);
     }
 
     public int computeDistance(int xa, int ya, int xb, int yb) {
