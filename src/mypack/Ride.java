@@ -8,6 +8,17 @@ public class Ride {
 
     public Ride() {}
 
+
+    public Ride(int tStart, int tFinish, int xStart, int yStart, int xFinish, int yFinish, int distance) {
+        this.tStart = tStart;
+        this.tFinish = tFinish;
+        this.xStart = xStart;
+        this.yStart = yStart;
+        this.xFinish = xFinish;
+        this.yFinish = yFinish;
+        this.distance = distance;
+    }
+
     public void computeDistance() {
         this.distance = Math.abs(xStart - xFinish) + Math.abs(yStart - yFinish);
     }
