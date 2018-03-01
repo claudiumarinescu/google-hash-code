@@ -45,4 +45,10 @@ public class Car {
         return time < Util.MAX_NO_STEPS &&
                rides.stream().anyMatch(ride -> time + ride.distance < Util.MAX_NO_STEPS); //TODO check if exclusive or inclusive
     }
+
+    public void addRide(Ride ride) {
+        time = Math.abs(x - ride.xFinish) + Math.abs(y - ride.yFinish);
+        x = ride.xFinish;
+        y = ride.yFinish;
+    }
 }
