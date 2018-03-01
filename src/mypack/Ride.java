@@ -7,11 +7,13 @@ public class Ride {
     public int tStart, tFinish;
     public int xStart, yStart, xFinish, yFinish;
     public int distance;
+    public int id;
 
     public Ride() {}
 
 
-    public Ride(int tStart, int tFinish, int xStart, int yStart, int xFinish, int yFinish) {
+    public Ride(int id, int tStart, int tFinish, int xStart, int yStart, int xFinish, int yFinish) {
+        this.id = id;
         this.tStart = tStart;
         this.tFinish = tFinish;
         this.xStart = xStart;

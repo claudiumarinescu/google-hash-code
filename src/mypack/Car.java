@@ -1,6 +1,7 @@
 package mypack;
 import utils.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -8,13 +9,16 @@ public class Car {
     public int x, y;
     public int time;
     public List<Ride> rides;
+    int id;
 
     public Car() {}
 
-    public Car(int x, int y) {
+    public Car(int id, int x, int y) {
+        this.id = id;
         this.x = x;
         this.y = y;
         time = 0;
+        rides = new ArrayList<>();
     }
 
     public int getX() {

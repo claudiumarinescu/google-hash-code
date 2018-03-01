@@ -22,14 +22,16 @@ public class Main {
 
         read();
 
+
+
         for (Car car :cars) {
             List<Ride> myRides = new ArrayList<>(rides);
             while(car.hasTime(myRides)) {
                 Ride ride = null;
                 Ride bestRide = null;
                 double bestScore = -Double.MAX_VALUE;
-                for (Iterator<Ride> it = myRides.iterator(); it.hasNext(); ride = it.next()) {
-
+                for (Iterator<Ride> it = myRides.iterator(); it.hasNext(); ) {
+                    ride = it.next();
                     if(ride.getThere(car)) {
                         double score = ride.calculateValue(car);
 
@@ -38,7 +40,7 @@ public class Main {
                             bestRide = ride;
                         }
                     } else {
-                        myRides.remove(ride);
+                        it.remove();
                     }
                 }
                 if (bestRide != null) {
@@ -51,6 +53,8 @@ public class Main {
 
             }
         }
+
+        afisare();
 
 
 
@@ -77,14 +81,23 @@ public class Main {
             int latestFinish = scanner.nextInt();
 
             if(latestFinish - earliestStart + 1 < Util.computeDistance(startX, startY, finishX, finishY));
-                rides.add(new Ride(earliestStart, latestFinish, startX, startY, finishX, finishY));
+                rides.add(new Ride(i, earliestStart, latestFinish, startX, startY, finishX, finishY));
         }
 
-        List<Car> cars = new ArrayList(Util.CARS_NO);
+        cars = new ArrayList(Util.CARS_NO);
         for (int i = 0; i < Util.CARS_NO; i++) {
-            cars.add(new Car(0,0));
+            cars.add(new Car(i, 0,0));
         }
+    }
 
+    public static void afisare() {
+        for (Car car : cars) {
+            System.out.println(car.id + " " );
+
+            for (Ride ride: car.rides) {
+                System.out.println(ride.id + " ");
+            }
+        }
     }
 
 
