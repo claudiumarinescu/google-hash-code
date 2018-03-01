@@ -87,5 +87,6 @@ public class Ride {
     }
 
     private boolean getThere(Car car) {
+        return (car.time + distance) < Util.MAX_NO_STEPS;
     }
 }
