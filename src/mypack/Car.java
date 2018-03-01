@@ -1,9 +1,12 @@
 package mypack;
+import utils.Util;
+
 import java.util.List;
 
 
 public class Car {
     public int x, y;
+    public int time;
     public List<Ride> rides;
 
     public Car() {}
@@ -11,6 +14,7 @@ public class Car {
     public Car(int x, int y) {
         this.x = x;
         this.y = y;
+        time = 0;
     }
 
     public int getX() {
@@ -38,6 +42,7 @@ public class Car {
     }
 
     public boolean hasTime(List<Ride> rides){
-        return false;
+        return time < Util.MAX_NO_STEPS &&
+               rides.stream().anyMatch(ride -> time + ride.distance < Util.MAX_NO_STEPS); //TODO check if exclusive or inclusive
     }
 }
