@@ -36,4 +36,8 @@ public class Car {
     public void setRides(List<Ride> rides) {
         this.rides = rides;
     }
+
+    public boolean hasTime(List<Ride> rides){
+        return false;
+    }
 }

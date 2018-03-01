@@ -12,11 +12,20 @@ public class Main {
 
     public static String inputFile = "input.in";
 
+    static List<Ride> rides;
+    static List<Car> cars;
+
 
     public static void main(String[] args) {
 
 
         read();
+
+        for (Car car :cars) {
+            while(car.hasTime(rides)) {
+
+            }
+        }
 
 
 
@@ -32,7 +41,7 @@ public class Main {
         Util.BONUS = scanner.nextInt();
         Util.MAX_NO_STEPS = scanner.nextInt();
 
-        List<Ride> rides = new ArrayList(Util.RIDES_NO);
+        rides = new ArrayList(Util.RIDES_NO);
 
         for (int i = 0; i < Util.RIDES_NO; i++) {
             int startX = scanner.nextInt();
@@ -43,7 +52,11 @@ public class Main {
             int latestFinish = scanner.nextInt();
 
             rides.add(new Ride(earliestStart, latestFinish, startX, startY, finishX, finishY));
+        }
 
+        List<Car> cars = new ArrayList(Util.CARS_NO);
+        for (int i = 0; i < Util.CARS_NO; i++) {
+            cars.add(new Car(0,0));
         }
 
     }
