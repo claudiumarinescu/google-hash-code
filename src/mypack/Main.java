@@ -6,6 +6,7 @@ import utils.Util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Main {
@@ -23,7 +24,10 @@ public class Main {
 
         for (Car car :cars) {
             while(car.hasTime(rides)) {
-
+                Ride ride = null;
+                for (Iterator<Ride> it = rides.iterator(); it.hasNext(); ride = it.next()) {
+                    ride.calculateValue(car);
+                }
             }
         }
 

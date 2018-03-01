@@ -23,6 +23,11 @@ public class Ride {
         return Math.abs(xStart - xFinish) + Math.abs(yStart - yFinish);
     }
 
+    public int computeDistance(int xa, int ya, int xb, int yb) {
+        return Math.abs(xa - xb) + Math.abs(ya - yb);
+    }
+
+
     public int gettStart() {
         return tStart;
     }
@@ -69,5 +74,17 @@ public class Ride {
 
     public void setyFinish(int yFinish) {
         this.yFinish = yFinish;
+    }
+
+    public double calculateValue(Car car) {
+
+
+        if(getThere(car))
+        int scor = distance - computeDistance(car.x, car.y, xStart, yStart);
+
+        return 0;
+    }
+
+    private boolean getThere(Car car) {
     }
 }
