@@ -56,4 +56,15 @@ public class Car {
         y = ride.yFinish;
         rides.add(ride);
     }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "x=" + x +
+                ", y=" + y +
+                ", time=" + time +
+                ", rides=" + rides +
+                ", id=" + id +
+                '}';
+    }
 }

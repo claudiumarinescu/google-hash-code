@@ -100,4 +100,18 @@ public class Ride {
         int distanceToStart = Math.abs(car.x - xStart) + Math.abs(car.y - yStart);
         return (car.time + distanceToStart + this.distance) < Util.MAX_NO_STEPS;
     }
+
+    @Override
+    public String toString() {
+        return "Ride{" +
+                "tStart=" + tStart +
+                ", tFinish=" + tFinish +
+                ", xStart=" + xStart +
+                ", yStart=" + yStart +
+                ", xFinish=" + xFinish +
+                ", yFinish=" + yFinish +
+                ", distance=" + distance +
+                ", id=" + id +
+                '}';
+    }
 }
