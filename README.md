@@ -5,4 +5,5 @@ Extended round final results:
   * rank 14th (Romania), 281st (all)
   
 Team name: C.O.D.
+
 Team members: Ovidiu Marus, Dragos Petrescu, Claudiu Marinescu
