@@ -6,19 +6,34 @@ import java.util.List;
 
 
 public class Car {
-    public int x, y;
-    public int time;
-    public List<Ride> rides;
-    int id;
-
-    public Car() {}
+    private int x, y;
+    private int time;
+    private List<Ride> rides;
+    private int id;
 
     public Car(int id, int x, int y) {
         this.id = id;
         this.x = x;
         this.y = y;
-        time = 0;
-        rides = new ArrayList<>();
+        this.time = 0;
+        this.rides = new ArrayList<>();
+    }
+
+    public boolean hasTime(List<Ride> rides){
+        return (this.time < Util.MAX_NO_STEPS)
+                && rides.stream().anyMatch(ride -> time + ride.getDistance() < Util.MAX_NO_STEPS);
+    }
+
+    public void addRide(Ride ride) {
+        int distanceToStart = Math.abs(x - ride.getxStart()) + Math.abs(y - ride.getyStart());
+        int timeWhenAtStart = time + distanceToStart;
+        int waitTime = timeWhenAtStart < ride.gettStart() ? ride.gettStart() - timeWhenAtStart : 0;
+
+        /* update car fields */
+        time += distanceToStart + waitTime + ride.getDistance();
+        x = ride.getxFinish();
+        y = ride.getyFinish();
+        rides.add(ride);
     }
 
     public int getX() {
@@ -37,24 +52,28 @@ public class Car {
         this.y = y;
     }
 
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public List<Ride> getRides() {
         return rides;
     }
 
     public void setRides(List<Ride> rides) {
         this.rides = rides;
-    }
-
-    public boolean hasTime(List<Ride> rides){
-        return time < Util.MAX_NO_STEPS &&
-               rides.stream().anyMatch(ride -> time + ride.distance < Util.MAX_NO_STEPS); //TODO check if exclusive or inclusive
-    }
-
-    public void addRide(Ride ride) {
-        time += Math.abs(x - ride.xStart) + Math.abs(y - ride.yStart) + ride.distance;
-        x = ride.xFinish;
-        y = ride.yFinish;
-        rides.add(ride);
     }
 
     @Override

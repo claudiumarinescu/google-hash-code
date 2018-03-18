@@ -4,13 +4,10 @@ package mypack;
 import utils.Util;
 
 public class Ride {
-    public int tStart, tFinish;
-    public int xStart, yStart, xFinish, yFinish;
-    public int distance;
-    public int id;
-
-    public Ride() {}
-
+    private int tStart, tFinish;
+    private int xStart, yStart, xFinish, yFinish;
+    private int distance;
+    private int id;
 
     public Ride(int id, int tStart, int tFinish, int xStart, int yStart, int xFinish, int yFinish) {
         this.id = id;
@@ -20,17 +17,49 @@ public class Ride {
         this.yStart = yStart;
         this.xFinish = xFinish;
         this.yFinish = yFinish;
-        this.distance = computeDistance();
+        this.distance = Util.computeDistance(xStart, yStart, xFinish, yFinish);
     }
 
-    public int computeDistance() {
-        return Util.computeDistance(xStart, xFinish, yStart, yFinish);
+    // heuristic for choosing best ride
+    Long calculateValue(Car car) {
+
+        Long scor = Long.MIN_VALUE;
+        if(getThere(car)) {
+
+            int distanceToStart = Util.computeDistance(car.getX(), car.getY(), this.xStart, this.yStart);
+            scor = (long) this.distance / 10 - 2 * distanceToStart;
+
+            if(car.getTime() + distanceToStart <= this.tStart) {
+                scor -= (this.tStart - car.getTime() - distanceToStart) / 2;
+                scor += Util.BONUS * 10;
+            }
+        }
+
+        return scor;
     }
 
-    public int computeDistance(int xa, int ya, int xb, int yb) {
-        return Math.abs(xa - xb) + Math.abs(ya - yb);
+    boolean getThere(Car car) {
+        int distanceToStart = Util.computeDistance(car.getX(), car.getY(), this.xStart, this.yStart);
+        return ((car.getTime() + distanceToStart + this.distance) < Util.MAX_NO_STEPS)
+                && ((car.getTime() + distanceToStart + this.distance) < this.tFinish);
     }
 
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int gettStart() {
         return tStart;
@@ -78,27 +107,6 @@ public class Ride {
 
     public void setyFinish(int yFinish) {
         this.yFinish = yFinish;
-    }
-
-    public double calculateValue(Car car) {
-
-        double scor = -Double.MAX_VALUE;
-        if(getThere(car)) {
-
-            scor = distance - computeDistance(car.x, car.y, xStart, yStart);
-
-            if(car.time + computeDistance(car.x, car.y, xStart, yStart) <= tStart) {
-                scor -= (tStart - car.time - computeDistance(car.x, car.y, xStart, yStart));
-                scor += Util.BONUS *10;
-            }
-        }
-
-        return scor;
-    }
-
-    public boolean getThere(Car car) {
-        int distanceToStart = Math.abs(car.x - xStart) + Math.abs(car.y - yStart);
-        return (car.time + distanceToStart + this.distance) < Util.MAX_NO_STEPS && car.time + distanceToStart + this.distance < tFinish;
     }
 
     @Override

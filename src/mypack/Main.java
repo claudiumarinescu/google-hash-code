@@ -12,53 +12,53 @@ import java.util.*;
 
 public class Main {
 
-    public static String inputFile = "input.in";
-
-    static List<Ride> rides;
-    static List<Car> cars;
+    private static List<Ride> rides;
+    private static List<Car> cars;
 
 
     public static void main(String[] args) {
 
+        int outIdx = 0;
+        for (String file : Util.INPUT_FILES) {
+            System.out.println("Computing " + file);
 
-        read();
+            read(Util.INPUT_FOLDER + file);
+            computeRides();
+            afisare(Util.OUTPUT_FOLDER + Util.OUTPUT_FILES[outIdx++]);
+        }
+
+        System.out.println("Results are ready!");
+    }
+
+    private static void computeRides() {
         Car emptyCar = new Car(-1, 0, 0);
 
-        PriorityQueue<Ride> queue = new PriorityQueue<>(new Comparator<Ride>() {
-            @Override
-            public int compare(Ride r1, Ride r2) {
-                if (r1.calculateValue(emptyCar) < r2.calculateValue(emptyCar)) {
-                    return 1;
-                }
-                return -1;
-            }
-        });
-
+        PriorityQueue<Ride> queue = new PriorityQueue<>(
+                (r1, r2) -> r2.calculateValue(emptyCar).compareTo(r1.calculateValue(emptyCar)) );
         queue.addAll(rides);
 
 
         for (Car car : cars) {
-            if (queue.isEmpty())
-                break;
-            Ride bestRide = queue.poll();
-            car.addRide(bestRide);
-            rides.remove(bestRide);
+            if (!queue.isEmpty()) {
+                Ride bestRide = queue.poll();
+                car.addRide(bestRide);
+                rides.remove(bestRide);
+            }
         }
-
 
         for (Car car : cars) {
             List<Ride> myRides = new ArrayList<>(rides);
 
 
             while (car.hasTime(myRides)) {
-                Ride ride = null;
+                Ride ride;
                 Ride bestRide = null;
-                double bestScore = -Double.MAX_VALUE;
+                long bestScore = Long.MIN_VALUE;
                 for (Iterator<Ride> it = myRides.iterator(); it.hasNext(); ) {
                     ride = it.next();
 
                     if (ride.getThere(car)) {
-                        double score = ride.calculateValue(car);
+                        long score = ride.calculateValue(car);
                         if (score > bestScore) {
                             bestScore = score;
                             bestRide = ride;
@@ -74,35 +74,12 @@ public class Main {
                 } else {
                     break;
                 }
-
             }
         }
-
-//        for (Ride ride : rides) {
-//            Car bestCar = null;
-//            double bestScore = -Double.MAX_VALUE;
-//
-//            for (Car car :cars) {
-//                double p = ride.calculateValue(car);
-//
-//                if (p > bestScore) {
-//                    bestScore = p;
-//                    bestCar = car;
-//                }
-//            }
-//
-//            if (bestCar != null)
-//                bestCar.addRide(ride);
-//        }
-
-
-        afisare();
-
-
     }
 
-    public static void read() {
-        MyScanner scanner = new MyScanner(new File(inputFile));
+    private static void read(String filename) {
+        MyScanner scanner = new MyScanner(new File(filename));
 
         Util.WIDTH = scanner.nextInt();
         Util.HEIGHT = scanner.nextInt();
@@ -111,7 +88,7 @@ public class Main {
         Util.BONUS = scanner.nextInt();
         Util.MAX_NO_STEPS = scanner.nextInt();
 
-        rides = new ArrayList(Util.RIDES_NO);
+        rides = new ArrayList<>(Util.RIDES_NO);
 
         for (int i = 0; i < Util.RIDES_NO; i++) {
             int startX = scanner.nextInt();
@@ -121,34 +98,36 @@ public class Main {
             int earliestStart = scanner.nextInt();
             int latestFinish = scanner.nextInt();
 
-            if (latestFinish - earliestStart + 1 < Util.computeDistance(startX, startY, finishX, finishY)) ;
-            rides.add(new Ride(i, earliestStart, latestFinish, startX, startY, finishX, finishY));
+            // if there is time to cover the distance
+            if (latestFinish - earliestStart >= Util.computeDistance(startX, startY, finishX, finishY)) {
+                rides.add(new Ride(i, earliestStart, latestFinish, startX, startY, finishX, finishY));
+            }
         }
 
-        cars = new ArrayList(Util.CARS_NO);
+        cars = new ArrayList<>(Util.CARS_NO);
         for (int i = 0; i < Util.CARS_NO; i++) {
             cars.add(new Car(i + 1, 0, 0));
         }
     }
 
-    public static void afisare() {
+    private static void afisare(String outFile) {
 
         BufferedWriter bw = null;
         FileWriter fw = null;
 
         try {
 
-            fw = new FileWriter(new File("out.out"));
+            fw = new FileWriter(new File(outFile));
             bw = new BufferedWriter(fw);
 
             StringBuilder content = new StringBuilder();
 
             for (Car car : cars) {
 
-                content.append(car.rides.size() + " ");
+                content.append(car.getRides().size()).append(" ");
 
-                for (Ride ride : car.rides) {
-                    content.append(ride.id + " ");
+                for (Ride ride : car.getRides()) {
+                    content.append(ride.getId()).append(" ");
                 }
                 content.append("\n");
             }
@@ -157,13 +136,10 @@ public class Main {
 
 
         } catch (IOException e) {
-
             e.printStackTrace();
-
         } finally {
 
             try {
-
                 if (bw != null)
                     bw.close();
 
@@ -171,17 +147,8 @@ public class Main {
                     fw.close();
 
             } catch (IOException ex) {
-
                 ex.printStackTrace();
-
             }
-
         }
-
     }
-
-
 }
-
-
-
